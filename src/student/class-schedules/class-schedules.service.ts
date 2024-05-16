@@ -14,6 +14,8 @@ export class ClassSchedulesService {
             }
         );
 
+        //Now we need to remove out the titles that come up within data
+        //in order to provide just the data
         const response = gssResponse.data.values.slice(1, gssResponse.data.values.length);
 
         return response;
