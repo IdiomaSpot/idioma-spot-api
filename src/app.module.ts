@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
+import { StudentModule } from './student/student.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { RolesGuard } from './auth/guards/roles.guard';
       ...configuration().ormConfig,
       autoLoadEntities: true,
     }),
-    UserModule
+    UserModule,
+    StudentModule,
   ],
   controllers: [AppController],
   providers: [AppService,
