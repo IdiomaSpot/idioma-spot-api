@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { GoogleSpreadSheetService } from 'src/google-spread-sheet/google-spread-sheet.service';
+import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
 
 @Injectable()
 export class ClassSchedulesService {

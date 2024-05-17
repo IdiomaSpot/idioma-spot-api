@@ -10,7 +10,7 @@ export class GoogleSpreadSheetService {
     private sheets: sheets_v4.Sheets;
 
     constructor(@Inject('CONFIG_OPTIONS') private options: GSPConfig) {
-        this.authorize(options);
+        options && this.authorize(options);
     }
 
     private async authorize(options: GSPConfig) {
