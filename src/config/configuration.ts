@@ -14,6 +14,9 @@ export default () => (
             synchronize: evalBool(process.env.ormConfig_synchronize),
             entities: JSON.parse(process.env.ormConfig_entities),
             schema: process.env.ormConfig_schema,
+        },
+        gspConfig: {
+            config: JSON.parse(process.env.gss_config),
         }
     }
 );
@@ -27,6 +30,7 @@ export interface IEnvConfig {
     expireTime: string;
     ignoreExpiration: boolean;
     ormConfig: IOrmConfig;
+    gspConfig: GSPConfig;
 }
 
 export interface IOrmConfig {
@@ -40,4 +44,8 @@ export interface IOrmConfig {
     synchronize: boolean;
     entities: Array<string>;
     schema: string;
+}
+
+export interface GSPConfig {
+    config: Record<string, any>;
 }
