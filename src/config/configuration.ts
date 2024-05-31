@@ -1,3 +1,5 @@
+import { evalBool } from '../utils/eval';
+
 export default () => (
     <IEnvConfig> {
         jwtSecret: process.env.jwtSecret,
@@ -20,10 +22,6 @@ export default () => (
         }
     }
 );
-
-function evalBool(value: string) {
-    return value && value == "true" ? true : false;
-}
 
 export interface IEnvConfig {
     jwtSecret: string;
