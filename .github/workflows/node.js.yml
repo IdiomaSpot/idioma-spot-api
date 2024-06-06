@@ -77,5 +77,5 @@ jobs:
           ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} << 'EOF'
             cd ${{ secrets.PATH }}
             npm install --production
-            pm2 restart nest-app || pm2 start dist/main.js --name "nest-app"
+            pm2 restart nest-app || pm2 start main.js --name "dev-api-nest-app"
           EOF
