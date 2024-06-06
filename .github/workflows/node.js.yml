@@ -68,6 +68,7 @@ jobs:
         run: |
           ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} "mkdir -p ${{ secrets.PATH }}"
 
-      - name: Verify remote directory
+      - name: Copy files via SSH
         run: |
-          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} "ls -la ${{ secrets.PATH }}"
+          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete dist/ node_modules/ package.json package-lock.json ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}
+
