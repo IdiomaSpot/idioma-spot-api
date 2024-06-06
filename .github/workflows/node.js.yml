@@ -71,11 +71,3 @@ jobs:
       - name: Copy files via SSH
         run: |
           rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete dist/ ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}
-
-      - name: SSH and Deploy
-        run: |
-          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} << 'EOF'
-            cd ${{ secrets.PATH }}
-            npm install --production
-            pm2 restart nest-app || pm2 start main.js --name "dev-api-nest-app"
-          EOF
