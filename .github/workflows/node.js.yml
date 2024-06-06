@@ -63,5 +63,9 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SUBDOMAIN }} >> ~/.ssh/known_hosts
+          
+      - name: Create remote directory
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.SUBDOMAIN }} "mkdir -p ${{ secrets.PATH }}"
 
 
