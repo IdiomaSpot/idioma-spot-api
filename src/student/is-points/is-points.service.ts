@@ -35,7 +35,7 @@ export class IsPointsService {
       }
     }
 
-    if (!response || !response?.email) {
+    if (!response?.email) {
       throw new HttpException(`User ${email} not found`, HttpStatus.NOT_FOUND);
     }
 
