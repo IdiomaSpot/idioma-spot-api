@@ -61,7 +61,7 @@ jobs:
 
       - name: Copy files via SSH
         run: |
-          rsync -avz --delete dist/ node_modules/ package.json package-lock.json ${{ secrets.VPS_USER }}@${{ secrets.SUBDOMAIN }}:/${{ secrets.PATH }}
+          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete dist/ node_modules/ package.json package-lock.json ${{ secrets.VPS_USER }}@${{ secrets.SUBDOMAIN }}:/${{ secrets.PATH }}
 
       - name: SSH and Deploy
         run: |
