@@ -12,8 +12,9 @@ async function bootstrap() {
     .setTitle('IdiomaSpot')
     .setDescription('IdiomaSpot API')
     .setVersion('0.1')
-    .addTag("User")
-    .addTag("Class Schedules")
+    .addTag('User')
+    .addTag('Class Schedules')
+    .addTag('IS Points')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
