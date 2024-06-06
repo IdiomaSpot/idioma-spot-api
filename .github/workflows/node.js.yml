@@ -67,8 +67,7 @@ jobs:
       - name: Create remote directory
         run: |
           ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} "mkdir -p ${{ secrets.PATH }}"
-          
-      - name: Copy files via SSH
-        run: |
-          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete dist/ node_modules/ package.json package-lock.json ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:/${{ secrets.PATH }}
 
+      - name: Verify remote directory
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} "ls -la ${{ secrets.PATH }}"
