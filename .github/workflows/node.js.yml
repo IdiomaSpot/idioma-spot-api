@@ -43,7 +43,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build-test
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Download build artifacts
@@ -52,7 +52,7 @@ jobs:
           name: build_artifacts
 
       - name: Decompress build artifacts
-        run: tar -xzf build_artifacts/build_artifacts.tar.gz -C .
+        run: tar -xzf build_artifacts.tar.gz -C .
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
