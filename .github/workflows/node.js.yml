@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         node_version: ['16.x']
-        os: [ubuntu-latest]
+        os: [centos-7]
 
     steps:
     - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
         path: build_artifacts.tar.gz
         
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: centos-7
     needs: build-test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
