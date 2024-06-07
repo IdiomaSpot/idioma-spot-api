@@ -70,4 +70,6 @@ jobs:
 
       - name: Copy files via SSH
         run: |
-          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' dist/ node_modules/ package.json package-lock.json ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}
+          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' dist/ ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}
+          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' node_modules/ ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}
+          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' package.json package-lock.json ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}
