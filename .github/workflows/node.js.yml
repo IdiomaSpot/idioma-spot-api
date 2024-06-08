@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         node_version: ['20.x']
-        os: [centos-7]
+        os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
         path: build_artifacts.tar.gz
         
   deploy:
-    runs-on: centos-7
+    runs-on: ubuntu-latest
     needs: build-test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
@@ -72,3 +72,11 @@ jobs:
         run: |
           rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' dist/ ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}/dist
           rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' package.json package-lock.json Dockerfile ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}
+    
+      - name: SSH and Deploy
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} << 'EOF'
+            cd /${{ secrets.PATH }}
+            docker build --network=host -t dev-is-api .
+            docker run -d -p 3000:3000 dev-is-api
+          EOF
