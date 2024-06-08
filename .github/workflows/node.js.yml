@@ -76,7 +76,7 @@ jobs:
       - name: SSH and Deploy
         run: |
           ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} << 'EOF'
-            cd /${{ secrets.PATH }}
+            cd ${{ secrets.PATH }}
             docker build --network=host -t dev-is-api .
             docker run -d -p 3000:3000 dev-is-api
           EOF
