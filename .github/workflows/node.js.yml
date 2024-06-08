@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: ['16.x']
+        node_version: ['20.x']
         os: [centos-7]
 
     steps:
@@ -28,11 +28,11 @@ jobs:
     - name: npm install, build and test
       run: |
         npm install
-        npm run build --if-present
+        npm run build
         npm test
 
     - name: Compress build artifacts
-      run: tar -czf build_artifacts.tar.gz dist/ node_modules/ package.json package-lock.json
+      run: tar -czf build_artifacts.tar.gz dist/ package.json package-lock.json Dockerfile
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4.3.3
@@ -71,5 +71,4 @@ jobs:
       - name: Copy files via SSH
         run: |
           rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' dist/ ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}/dist
-          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' node_modules/ ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}/node_modules
-          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' package.json package-lock.json ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}
+          rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --delete --exclude '.env' package.json package-lock.json Dockerfile ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }}:${{ secrets.PATH }}

@@ -40,6 +40,7 @@ export class GoogleSpreadSheetService {
             });
             return data;
         } catch (e) {
+            console.log("ERROR", e);
             return Promise.reject({ message: 'We are having troubles reading the target file', reason: e });
         }
     }
