@@ -1,11 +1,9 @@
 # Utilize an ubuntu image as base
-FROM ubuntu:24.04
+FROM node:20-alpine
 
 # Update the package indexes and installs dependencies
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs
+RUN apk update && \
+    apk add bind-tools
 
 # Make the workspace within /app
 WORKDIR /app
@@ -14,7 +12,7 @@ WORKDIR /app
 COPY . .
 
 # Install the application dependencies
-RUN npm install --production
+RUN npm install
 
 # Expose the port where the application will be executed
 EXPOSE 3000

@@ -77,13 +77,6 @@ jobs:
         run: |
           ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.DOMAIN }} << 'EOF'
             cd ${{ secrets.PATH }}
-            docker build --network=host -t dev-is-api .
-            docker ps --format "{{.ID}}\t{{.Names}}" | while read line
-            do
-              if [[ $line == *"/dev-is-api"* ]]; then
-                container_id=$(echo $line | cut -f1)
-                docker stop $container_id
-              fi
-            done
-            docker run -d -p 3000:3000 dev-is-api
+            chmod +x restart_container.sh
+            ./restart_container.sh
           EOF
