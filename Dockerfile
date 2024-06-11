@@ -3,7 +3,7 @@ FROM node:20-alpine
 
 # Update the package indexes and installs dependencies
 RUN apk update && \
-    apk add bind-tools
+    apk add --no-cache bind-tools
 
 # Make the workspace within /app
 WORKDIR /app
@@ -12,7 +12,7 @@ WORKDIR /app
 COPY . .
 
 # Install the application dependencies
-RUN npm install
+RUN npm install --omit=dev
 
 # Expose the port where the application will be executed
 EXPOSE 3000
