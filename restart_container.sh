@@ -20,4 +20,4 @@ fi
 
 # Run the new container
 echo "Running new container..."
-docker run -d --name $CONTAINER_NAME -p 3000:3000 $IMAGE_NAME
+docker run -d --name $CONTAINER_NAME -p 3000:3000 --network host $IMAGE_NAME
