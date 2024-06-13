@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
 import { IsPointsDTO } from './dtos/is-points.dto';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class IsPointsService {

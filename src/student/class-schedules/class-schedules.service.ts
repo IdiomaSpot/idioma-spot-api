@@ -1,35 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
-import { ClassScheduleDTO } from './dtos/class-schedule.dto'
+import { ClassScheduleDTO } from './dtos/class-schedule.dto';
 import { evalBool } from '../../utils/eval';
 
 @Injectable()
 export class ClassSchedulesService {
-    constructor(private gssService: GoogleSpreadSheetService, private envConfig: ConfigService) { }
+  constructor(
+    private gssService: GoogleSpreadSheetService,
+    private envConfig: ConfigService,
+  ) {}
 
-    async getClassesSchedules(range: string): Promise<ClassScheduleDTO[]> {
-        let response: ClassScheduleDTO[] = [];
-        const gssResponse = await this.gssService.getValuesFromSpreadSheet(
-            {
-                id: this.envConfig.get<string>('gss_id'),
-                range: range,
-            }
-        );
+  async getClassesSchedules(range: string): Promise<ClassScheduleDTO[]> {
+    const response: ClassScheduleDTO[] = [];
+    const gssResponse = await this.gssService.getValuesFromSpreadSheet({
+      id: this.envConfig.get<string>('gss_id'),
+      range: range,
+    });
 
-        //Now we need to remove out the titles that come up within data
-        //in order to provide just the raw data
-        const rawData = gssResponse.data.values.slice(1, gssResponse.data.values.length);
+    //Now we need to remove out the titles that come up within data
+    //in order to provide just the raw data
+    const rawData = gssResponse.data.values.slice(
+      1,
+      gssResponse.data.values.length,
+    );
 
-        for (const schedule of rawData) {
-            let classSchedule = new ClassScheduleDTO();
-            classSchedule.id = schedule[0] || null;
-            classSchedule.schedule = schedule[1] || null;
-            classSchedule.isAlmostFull = evalBool(schedule[5]) || false;
-            classSchedule.isFull = evalBool(schedule[6]) || false;
-            response.push(classSchedule);
-        }
+    for (const schedule of rawData) {
+      const classSchedule = new ClassScheduleDTO();
+      classSchedule.id = schedule[0] || null;
+      classSchedule.schedule = schedule[1] || null;
+      classSchedule.isAlmostFull = evalBool(schedule[5]) || false;
+      classSchedule.isFull = evalBool(schedule[6]) || false;
+      classSchedule.cost = schedule[7] || null;
+      classSchedule.startDate = schedule[8] || null;
+      classSchedule.classLevel = schedule[9] || null;
+      classSchedule.hoursDuration = schedule[10] || null;
 
-        return response;
+      response.push(classSchedule);
     }
+
+    return response;
+  }
 }
