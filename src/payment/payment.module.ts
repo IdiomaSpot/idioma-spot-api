@@ -3,12 +3,11 @@ import { MercadoPagoModule } from './payment-processor/mercado-pago/mercado-pago
 import { PaymentController } from './payment.controller';
 import { PaymentService } from './payment.service';
 import configuration from 'src/config/configuration';
+import { MercadoPagoService } from './payment-processor/mercado-pago/mercado-pago.service';
 
 @Module({
-    imports: [
-        MercadoPagoModule.register(configuration().mercadoPagoConfig)
-    ],
-    controllers: [PaymentController],
-    providers: [PaymentService]
+  imports: [MercadoPagoModule.register(configuration().mercadoPagoConfig)],
+  controllers: [PaymentController],
+  providers: [PaymentService],
 })
 export class PaymentModule {}
