@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ClassSchedulesController } from './class-schedules.controller';
 import { ClassSchedulesService } from './class-schedules.service';
 import { ConfigService } from '@nestjs/config';
-import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
+import { GoogleSpreadSheetService } from '../../shared/google-spread-sheet/google-spread-sheet.service';
 
 describe('ClassSchedulesController', () => {
   let controller: ClassSchedulesController;

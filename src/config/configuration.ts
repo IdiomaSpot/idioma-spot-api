@@ -22,6 +22,7 @@ export default () =>
     },
     mercadoPagoConfig: {
       accessToken: process.env.mp_accessToken,
+      backUrl: process.env.mp_backUrl,
     },
   };
 
@@ -31,7 +32,7 @@ export interface IEnvConfig {
   ignoreExpiration: boolean;
   ormConfig: IOrmConfig;
   gspConfig: GSPConfig;
-  mercadoPagoConfig: MPPagoConfig;
+  mercadoPagoConfig: MPConfig;
 }
 
 interface IOrmConfig {
@@ -67,6 +68,7 @@ export interface GSPConfig {
   config: Record<string, any>;
 }
 
-export interface MPPagoConfig {
+export interface MPConfig {
   accessToken: string;
+  backUrl: string;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
+import { GoogleSpreadSheetService } from '../../shared/google-spread-sheet/google-spread-sheet.service';
 import { ClassScheduleDTO } from './dtos/class-schedule.dto';
 import { evalBool } from '../../utils/eval';
 

@@ -1,11 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MercadoPagoService } from './mercado-pago.service';
-import { MPPagoConfig } from 'src/config/configuration';
+import { MPConfig } from 'src/config/configuration';
 
 describe('MercadoPagoService', () => {
   let service: MercadoPagoService;
-  let options: MPPagoConfig = {
+  let options: MPConfig = {
     accessToken: '',
+    backUrl: '',
   };
 
   beforeEach(async () => {

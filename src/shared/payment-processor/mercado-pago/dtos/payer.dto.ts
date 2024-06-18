@@ -2,11 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Payer } from 'mercadopago/dist/clients/payment/commonTypes';
 
 export class PayerDTO implements Payer {
-  @ApiProperty()
-  first_name: string;
+  @ApiProperty({ required: true })
+  userId: number;
 
   @ApiProperty()
-  last_name: string;
+  name: string;
+
+  @ApiProperty()
+  surname: string;
 
   @ApiProperty()
   email: string;

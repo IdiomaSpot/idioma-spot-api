@@ -4,16 +4,17 @@ import {
   PreferenceRequest,
   PreferenceResponse,
 } from 'mercadopago/dist/clients/preference/commonTypes';
-import { MPPagoConfig } from 'src/config/configuration';
+import { MPConfig } from 'src/config/configuration';
 
 @Injectable()
 export class MercadoPagoService {
-  private client: MPPagoConfig;
-  constructor(@Inject('CONFIG_OPTIONS') private options: MPPagoConfig) {
+  private client: MercadoPagoConfig;
+  
+  constructor(@Inject('CONFIG_OPTIONS') private options: MPConfig) {
     this.options && this.authorize(this.options);
   }
 
-  private authorize(options: MPPagoConfig) {
+  private authorize(options: MPConfig) {
     // Adding credencials
     this.client = new MercadoPagoConfig({
       accessToken: options.accessToken,
