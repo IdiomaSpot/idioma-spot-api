@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { GenericEntity } from 'src/generics/generic.entity';
+import { GenericEntity } from '../../generics/generic.entity';
 import { UserRole } from '../user-role.enum';
-import { Payment } from 'src/payment/entities/payment.entity';
+import { Payment } from '../../payment/entities/payment.entity';
 
 @Entity('user')
 export class User extends GenericEntity {

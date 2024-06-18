@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PreferenceRequest } from 'mercadopago/dist/clients/preference/commonTypes';
-import configuration from 'src/config/configuration';
-import { GenericService } from 'src/generics/generic.service';
+import configuration from '../config/configuration';
+import { GenericService } from '../generics/generic.service';
 import { Payment } from './entities/payment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserService } from 'src/user/user.service';
-import { MercadoPagoService } from 'src/shared/payment-processor/mercado-pago/mercado-pago.service';
-import { PreferenceResponseDTO } from 'src/shared/payment-processor/mercado-pago/dtos/preference-response.dto';
-import { PreferenceRequestDTO } from 'src/shared/payment-processor/mercado-pago/dtos/preference-request.dto';
+import { UserService } from '../user/user.service';
+import { MercadoPagoService } from '../shared/payment-processor/mercado-pago/mercado-pago.service';
+import { PreferenceResponseDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-response.dto';
+import { PreferenceRequestDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-request.dto';
 import { randomBytes } from 'crypto';
 import { ProcessPaymentParams } from './dtos/process-payment-params.dto';
 

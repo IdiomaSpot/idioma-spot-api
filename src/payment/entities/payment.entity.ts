@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { GenericEntity } from 'src/generics/generic.entity';
-import { User } from 'src/user/entities/user.entity';
+import { GenericEntity } from '../../generics/generic.entity';
+import { User } from '../../user/entities/user.entity';
 import { PaymentStatus } from '../types/payment-status.type';
 
 @Entity('payment')

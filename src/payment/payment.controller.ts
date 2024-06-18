@@ -7,12 +7,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaymentService } from './payment.service';
-import { GenericController } from 'src/generics/generic.controller';
+import { GenericController } from '../generics/generic.controller';
 import { Payment } from './entities/payment.entity';
-import { PreferenceRequestDTO } from 'src/shared/payment-processor/mercado-pago/dtos/preference-request.dto';
-import { PreferenceResponseDTO } from 'src/shared/payment-processor/mercado-pago/dtos/preference-response.dto';
+import { PreferenceRequestDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-request.dto';
+import { PreferenceResponseDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-response.dto';
 import { ProcessPaymentParams } from './dtos/process-payment-params.dto';
-import { Public } from 'src/auth/decorators/public.decorator';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('payment')
 @ApiTags('Payment')
