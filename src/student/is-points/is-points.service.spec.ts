@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { IsPointsService } from './is-points.service';
-import { GoogleSpreadSheetService } from '../../shared/google-spread-sheet/google-spread-sheet.service';
+import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
 import { ConfigService } from '@nestjs/config';
 
 describe('IsPointsService', () => {

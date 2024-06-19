@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { GoogleSpreadSheetService } from '../../shared/google-spread-sheet/google-spread-sheet.service';
+import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
 import { IsPointsDTO } from './dtos/is-points.dto';
 
 @Injectable()

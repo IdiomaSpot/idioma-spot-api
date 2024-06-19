@@ -1,32 +1,28 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { GenericEntity } from '../../generics/generic.entity';
-import { UserRole } from '../user-role.enum';
-import { Payment } from '../../payment/entities/payment.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { GenericEntity } from "src/generics/generic.entity";
+import { UserRole } from "../user-role.enum";
 
-@Entity('user')
+@Entity("user")
 export class User extends GenericEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
 
-  @Column({ unique: true })
-  email: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column({ select: false })
-  password: string;
+    @Column({ unique: true })
+    email: string;
 
-  @Column()
-  name: string;
+    @Column({ select: false })
+    password: string;
 
-  @Column()
-  surname: string;
+    @Column()
+    name: string;
 
-  @Column()
-  phone: string;
+    @Column()
+    surname: string;
 
-  @Column({ type: 'enum', enum: UserRole })
-  role: UserRole;
+    @Column()
+    phone: string;
 
-  //Relationships
-  @OneToMany(() => Payment, (payment) => payment.user)
-  payments: Payment[];
+    @Column({ type: "enum", enum: UserRole })
+    role: UserRole;
 }
