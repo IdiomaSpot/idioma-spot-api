@@ -21,6 +21,9 @@ import { PaymentModule } from './payment/payment.module';
       type: configuration().ormConfig.type,
       ...configuration().ormConfig,
       autoLoadEntities: true,
+      extra: {
+        connectionLimit: 10, // Use a connection pool with a maximum of 10 connections
+      },
     }),
     UserModule,
     StudentModule,

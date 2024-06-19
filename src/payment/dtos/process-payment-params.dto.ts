@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PaymentStatus } from '../types/payment-status.type';
 
-export class ProcessPaymentParams {
+export class ProcessPaymentParamsDTO {
   @ApiProperty({ type: String })
   payment_id: string;
 
-  @ApiProperty({ type: String, examples: ['initial', 'approved', 'pending', 'failed'] })
+  @ApiProperty({
+    type: String,
+  })
   status: PaymentStatus;
 
   @ApiProperty({ type: String })
