@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { IsPointsController } from './is-points.controller';
 import { IsPointsService } from './is-points.service';
 import { ConfigService } from '@nestjs/config';
-import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
+import { GoogleSpreadSheetService } from '../../shared/google-spread-sheet/google-spread-sheet.service';
 
 describe('IsPointsController', () => {
   let controller: IsPointsController;
