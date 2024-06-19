@@ -11,7 +11,7 @@ import { GenericController } from '../generics/generic.controller';
 import { Payment } from './entities/payment.entity';
 import { PreferenceRequestDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-request.dto';
 import { PreferenceResponseDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-response.dto';
-import { ProcessPaymentParams } from './dtos/process-payment-params.dto';
+import { ProcessPaymentParamsDTO } from './dtos/process-payment-params.dto';
 import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('payment')
@@ -42,10 +42,18 @@ export class PaymentController extends GenericController<
   @Public()
   @Get('process-payment')
   @ApiQuery({ name: 'payment_id', type: String })
-  @ApiQuery({ name: 'status', type: String })
+  @ApiQuery({
+    name: 'status',
+    description: 'Possible Values: initial, approved, pending, failed',
+    type: String,
+  })
   @ApiQuery({ name: 'external_reference', type: String })
   @ApiQuery({ name: 'merchant_order_id', type: String })
-  processPayment(@Query() queryParams: ProcessPaymentParams) {
-    return this.paymentService.processPayment(queryParams);
+  async processPayment(@Query() queryParams: ProcessPaymentParamsDTO) {
+    try {
+      return await this.paymentService.processPayment(queryParams);
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

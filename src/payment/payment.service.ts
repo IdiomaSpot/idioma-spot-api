@@ -10,7 +10,7 @@ import { MercadoPagoService } from '../shared/payment-processor/mercado-pago/mer
 import { PreferenceResponseDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-response.dto';
 import { PreferenceRequestDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-request.dto';
 import { randomBytes } from 'crypto';
-import { ProcessPaymentParams } from './dtos/process-payment-params.dto';
+import { ProcessPaymentParamsDTO } from './dtos/process-payment-params.dto';
 
 @Injectable()
 export class PaymentService extends GenericService<Payment> {
@@ -77,15 +77,24 @@ export class PaymentService extends GenericService<Payment> {
     return this.paymentRepository.save(payments);
   }
 
-  async processPayment(params: ProcessPaymentParams) {
-    let payment = await this.paymentRepository.findOne({
-      where: { externalReference: params.external_reference },
-    });
-    payment.paymentId = params.payment_id;
-    payment.merchantOrderId = params.merchant_order_id;
-    payment.status = params.status;
+  async processPayment(params: ProcessPaymentParamsDTO) {
+    try {
+      let payment = await this.paymentRepository.findOne({
+        where: { externalReference: params.external_reference },
+      });
+      if (!payment) {
+        // Handle the case where the payment is not found
+        throw new Error('Payment not found');
+      }
+      payment.paymentId = params.payment_id;
+      payment.merchantOrderId = params.merchant_order_id;
+      payment.status = params.status;
 
-    payment = await this.paymentRepository.save(payment);
-    return payment;
+      payment = await this.paymentRepository.save(payment);
+      return payment;
+    } catch (error) {
+      console.log('ERROR', error);
+      throw error;
+    }
   }
 }
