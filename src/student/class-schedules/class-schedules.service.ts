@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { GoogleSpreadSheetService } from '../../google-spread-sheet/google-spread-sheet.service';
 import { ClassScheduleDTO } from './dtos/class-schedule.dto';
 import { evalBool } from '../../utils/eval';
-import { isNotValidDate, parseStringToDate } from 'src/utils/handlerDates';
+import { isNotValidDate, parseStringToDate } from '../../utils/handlerDates';
 
 @Injectable()
 export class ClassSchedulesService {
