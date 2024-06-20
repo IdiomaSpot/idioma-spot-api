@@ -22,7 +22,7 @@ import { PreferenceResponseDTO } from '../shared/payment-processor/mercado-pago/
 import { ProcessPaymentParamsDTO } from './dtos/process-payment-params.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Response } from 'express';
-import configuration from 'src/config/configuration';
+import configuration from '../config/configuration';
 
 @Controller('payment')
 @ApiTags('Payment')
