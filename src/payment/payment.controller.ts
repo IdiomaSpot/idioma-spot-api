@@ -71,7 +71,6 @@ export class PaymentController extends GenericController<
       return payment;
     } catch (e) {
       res.redirect(`${configuration().baseStatusPage}error`);
-      console.error(e);
     }
   }
 }

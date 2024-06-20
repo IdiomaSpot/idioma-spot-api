@@ -17,6 +17,9 @@ export class ClassScheduleDTO {
   @ApiProperty()
   classLevel: string;
 
+  @ApiProperty()
+  link: string;
+
   @Type(() => Date)
   @ApiProperty()
   startDate: Date;

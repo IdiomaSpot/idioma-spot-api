@@ -3,7 +3,7 @@ import { StudentController } from './student.controller';
 import { ClassSchedulesController } from './class-schedules/class-schedules.controller';
 import { IsPointsController } from './is-points/is-points.controller';
 import { IsPointsService } from './is-points/is-points.service';
-import { GoogleSpreadSheetModule } from 'src/google-spread-sheet/google-spread-sheet.module';
+import { GoogleSpreadSheetModule } from 'src/shared/google-spread-sheet/google-spread-sheet.module';
 import configuration from 'src/config/configuration';
 import { ClassSchedulesService } from './class-schedules/class-schedules.service';
 
