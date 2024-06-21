@@ -1,4 +1,12 @@
-import { Body, Controller, Get, HttpStatus, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -13,6 +21,8 @@ import { PreferenceRequestDTO } from '../shared/payment-processor/mercado-pago/d
 import { PreferenceResponseDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-response.dto';
 import { ProcessPaymentParamsDTO } from './dtos/process-payment-params.dto';
 import { Public } from '../auth/decorators/public.decorator';
+import { Response } from 'express';
+import configuration from '../config/configuration';
 
 @Controller('payment')
 @ApiTags('Payment')
@@ -49,11 +59,18 @@ export class PaymentController extends GenericController<
   })
   @ApiQuery({ name: 'external_reference', type: String })
   @ApiQuery({ name: 'merchant_order_id', type: String })
-  async processPayment(@Query() queryParams: ProcessPaymentParamsDTO) {
+  async processPayment(
+    @Query() queryParams: ProcessPaymentParamsDTO,
+    @Res() res: Response,
+  ) {
     try {
-      return await this.paymentService.processPayment(queryParams);
+      const payment = await this.paymentService.processPayment(queryParams);
+
+      res.redirect(`${configuration().baseStatusPage}${payment.status}`);
+
+      return payment;
     } catch (e) {
-      console.error(e);
+      res.redirect(`${configuration().baseStatusPage}error`);
     }
   }
 }

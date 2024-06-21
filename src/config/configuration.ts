@@ -24,6 +24,7 @@ export default () =>
       accessToken: process.env.mp_accessToken,
       backUrl: process.env.mp_backUrl,
     },
+    baseStatusPage: process.env.baseStatusPage,
   };
 
 export interface IEnvConfig {
@@ -33,6 +34,7 @@ export interface IEnvConfig {
   ormConfig: IOrmConfig;
   gspConfig: GSPConfig;
   mercadoPagoConfig: MPConfig;
+  baseStatusPage: string;
 }
 
 interface IOrmConfig {
