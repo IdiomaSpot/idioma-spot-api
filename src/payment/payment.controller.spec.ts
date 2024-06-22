@@ -8,6 +8,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { mockDataSource, mockRepository } from '../utils/mocks/datasource.mock';
 import { User } from '../user/entities/user.entity';
+import { ClassesService } from '../student/classes/classes.service';
+import { StudentClass } from '../student/classes/entities/student-class.entity';
 
 describe('PaymentController', () => {
   let controller: PaymentController;
@@ -28,6 +30,10 @@ describe('PaymentController', () => {
           provide: getRepositoryToken(User),
           useValue: mockRepository,
         },
+        {
+          provide: getRepositoryToken(StudentClass),
+          useValue: mockRepository,
+        },
         PaymentService,
         MercadoPagoService,
         UserService,
@@ -35,6 +41,7 @@ describe('PaymentController', () => {
           provide: 'CONFIG_OPTIONS',
           useValue: undefined,
         },
+        ClassesService,
       ],
     }).compile();
 
