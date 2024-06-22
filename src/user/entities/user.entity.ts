@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { GenericEntity } from '../../generics/generic.entity';
 import { UserRole } from '../user-role.enum';
 import { Payment } from '../../payment/entities/payment.entity';
+import { StudentClass } from '../../student/classes/entities/student-class.entity';
 
 @Entity('user')
 export class User extends GenericEntity {
@@ -29,4 +30,7 @@ export class User extends GenericEntity {
   //Relationships
   @OneToMany(() => Payment, (payment) => payment.user)
   payments: Payment[];
+
+  @OneToMany(() => StudentClass, (klass) => klass.student)
+  classes: StudentClass[];
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PreferenceRequest } from 'mercadopago/dist/clients/preference/commonTypes';
 import configuration from '../config/configuration';
 import { GenericService } from '../generics/generic.service';
@@ -11,6 +11,8 @@ import { PreferenceResponseDTO } from '../shared/payment-processor/mercado-pago/
 import { PreferenceRequestDTO } from '../shared/payment-processor/mercado-pago/dtos/preference-request.dto';
 import { randomBytes } from 'crypto';
 import { ProcessPaymentParamsDTO } from './dtos/process-payment-params.dto';
+import { StudentClassDTO } from '../student/classes/dtos/student-class.dto';
+import { ClassesService } from '../student/classes/classes.service';
 
 @Injectable()
 export class PaymentService extends GenericService<Payment> {
@@ -19,6 +21,7 @@ export class PaymentService extends GenericService<Payment> {
     private readonly paymentRepository: Repository<Payment>,
     private readonly mercadoPagoService: MercadoPagoService,
     private readonly userService: UserService,
+    private readonly classesService: ClassesService,
   ) {
     super(paymentRepository);
   }
@@ -46,7 +49,6 @@ export class PaymentService extends GenericService<Payment> {
     try {
       let response =
         await this.mercadoPagoService.createPreference(fullPreference);
-      console.log(response);
       return <PreferenceResponseDTO>{
         preferenceId: response.id,
         externalReference: response.external_reference,
@@ -66,6 +68,7 @@ export class PaymentService extends GenericService<Payment> {
       let payment = new Payment();
       payment.description = item.title;
       payment.title = item.description;
+      payment.classScheduleId = item.id;
       payment.quantity = item.quantity;
       payment.unitPrice = item.unit_price;
       payment.status = 'initial';
@@ -81,6 +84,7 @@ export class PaymentService extends GenericService<Payment> {
     try {
       let payment = await this.paymentRepository.findOne({
         where: { externalReference: params.external_reference },
+        relations: { user: true },
       });
       if (!payment) {
         // Handle the case where the payment is not found
@@ -91,10 +95,30 @@ export class PaymentService extends GenericService<Payment> {
       payment.status = params.status;
 
       payment = await this.paymentRepository.save(payment);
+
+      let studentClass = new StudentClassDTO();
+      studentClass.classScheduleId = payment.classScheduleId;
+      studentClass.classType = payment.description;
+      studentClass.paymentId = payment.id;
+      studentClass.studentId = payment.user.id;
+
+      try {
+        await this.classesService.create(studentClass);
+      } catch {
+        throw new Error('EXPECTATION_FAILED');
+      }
+
       return payment;
     } catch (error) {
-      console.log('ERROR', error);
-      throw error;
+      if (error?.message === 'EXPECTATION_FAILED') {
+        throw new HttpException(
+          'ERROR ASIGNING STUDENT CLASS, PLEASE CONTACT US',
+          HttpStatus.EXPECTATION_FAILED,
+        );
+      } else {
+        console.log('ERROR', error);
+        throw error;
+      }
     }
   }
 }

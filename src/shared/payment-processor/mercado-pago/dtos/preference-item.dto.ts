@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Items } from 'mercadopago/dist/clients/commonTypes';
+import { ClassType } from '../../../../student/class-schedules/class-schedules-types';
 
 export class PrefenceItemDTO implements Items {
-  @ApiProperty()
+  @ApiProperty({ description: 'classScheduleId' })
   id: string;
 
-  @ApiProperty()
-  title: string;
+  @ApiProperty({ enum: ClassType })
+  title: ClassType;
 
   @ApiProperty()
   description: string;

@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
 import { PaymentController } from './payment.controller';
 import { PaymentService } from './payment.service';
-import configuration from 'src/config/configuration';
-import { MercadoPagoModule } from 'src/shared/payment-processor/mercado-pago/mercado-pago.module';
-import { UserService } from 'src/user/user.service';
+import configuration from '../config/configuration';
+import { MercadoPagoModule } from '../shared/payment-processor/mercado-pago/mercado-pago.module';
+import { UserService } from '../user/user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Payment } from './entities/payment.entity';
-import { User } from 'src/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
+import { ClassesService } from '../student/classes/classes.service';
+import { StudentClass } from '../student/classes/entities/student-class.entity';
 
 @Module({
   imports: [
     MercadoPagoModule.register(configuration().mercadoPagoConfig),
-    TypeOrmModule.forFeature([Payment, User]),
+    TypeOrmModule.forFeature([Payment, User, StudentClass]),
   ],
   controllers: [PaymentController],
-  providers: [PaymentService, UserService],
+  providers: [PaymentService, UserService, ClassesService],
 })
 export class PaymentModule {}
