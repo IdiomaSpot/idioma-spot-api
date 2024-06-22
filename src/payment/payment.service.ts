@@ -96,16 +96,17 @@ export class PaymentService extends GenericService<Payment> {
 
       payment = await this.paymentRepository.save(payment);
 
-      let studentClass = new StudentClassDTO();
-      studentClass.classScheduleId = payment.classScheduleId;
-      studentClass.classType = payment.description;
-      studentClass.paymentId = payment.id;
-      studentClass.studentId = payment.user.id;
-
-      try {
-        await this.classesService.create(studentClass);
-      } catch {
-        throw new Error('EXPECTATION_FAILED');
+      if (payment.status === 'approved') {
+        let studentClass = new StudentClassDTO();
+        studentClass.classScheduleId = payment.classScheduleId;
+        studentClass.classType = payment.description;
+        studentClass.paymentId = payment.id;
+        studentClass.studentId = payment.user.id;
+        try {
+          await this.classesService.create(studentClass);
+        } catch {
+          throw new Error('EXPECTATION_FAILED');
+        }
       }
 
       return payment;
