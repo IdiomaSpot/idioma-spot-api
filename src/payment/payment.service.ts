@@ -61,7 +61,9 @@ export class PaymentService extends GenericService<Payment> {
   }
 
   async createFromPreference(preference: PreferenceResponseDTO) {
-    const user = await this.userService.findOneById(preference.payer.userId);
+    const user = await this.userService.findOne({
+      where: { email: preference.payer.email },
+    });
 
     let payments: Payment[] = [];
     for (const item of preference.items) {
