@@ -23,7 +23,7 @@ export abstract class GenericController<
   @Post()
   @ApiBearerAuth()
   async create<ReturnType = ResponseType>(
-    @Body() entity: Entity,
+    @Body() entity: Entity | any,
   ): Promise<ReturnType> {
     return this.service.create<ReturnType>(entity);
   }

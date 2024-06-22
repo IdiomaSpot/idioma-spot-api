@@ -65,7 +65,7 @@ export class PaymentController extends GenericController<
   ) {
     try {
       const payment = await this.paymentService.processPayment(queryParams);
-
+      console.log('PAYMENT PROCESSED');
       res.redirect(`${configuration().baseStatusPage}${payment.status}`);
 
       return payment;

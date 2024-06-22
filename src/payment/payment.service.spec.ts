@@ -7,6 +7,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { mockDataSource, mockRepository } from '../utils/mocks/datasource.mock';
 import { DataSource } from 'typeorm';
 import { User } from '../user/entities/user.entity';
+import { ClassesService } from '../student/classes/classes.service';
+import { StudentClass } from '../student/classes/entities/student-class.entity';
 
 describe('PaymentService', () => {
   let service: PaymentService;
@@ -17,6 +19,10 @@ describe('PaymentService', () => {
         {
           provide: DataSource,
           useValue: mockDataSource,
+        },
+        {
+          provide: getRepositoryToken(StudentClass),
+          useValue: mockRepository,
         },
         {
           provide: getRepositoryToken(Payment),
@@ -33,6 +39,7 @@ describe('PaymentService', () => {
           provide: 'CONFIG_OPTIONS',
           useValue: undefined,
         },
+        ClassesService,
       ],
     }).compile();
 

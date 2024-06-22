@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { GenericEntity } from '../../generics/generic.entity';
 import { User } from '../../user/entities/user.entity';
 import { PaymentStatus } from '../types/payment-status.type';
+import { ClassType } from '../../student/class-schedules/class-schedules-types';
 
 @Entity('payment')
 export class Payment extends GenericEntity {
@@ -20,11 +21,14 @@ export class Payment extends GenericEntity {
   @Column({ default: 'initial' })
   status: PaymentStatus;
 
-  @Column()
+  @Column({ comment: 'Class Description' })
   title: string;
 
-  @Column()
-  description: string;
+  @Column({ enum: ClassType, comment: 'Class type' })
+  description: ClassType;
+
+  @Column({ comment: 'Class Schedule Id' })
+  classScheduleId: string;
 
   @Column()
   quantity: number;
