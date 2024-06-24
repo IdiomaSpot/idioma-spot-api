@@ -25,6 +25,7 @@ import { ProcessPaymentParamsDTO } from './dtos/process-payment-params.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Response } from 'express';
 import configuration from '../config/configuration';
+import { PaymentDTO } from './dtos/payment.dto';
 
 @Controller('payment')
 @ApiTags('Payment')
@@ -79,6 +80,7 @@ export class PaymentController extends GenericController<
   @Get(':studentId')
   @ApiBearerAuth()
   @ApiParam({ name: 'studentId', type: 'number' })
+  @ApiResponse({ type: PaymentDTO, isArray: true, status: HttpStatus.OK })
   async getPaymentsByUser(@Param('studentId') studentId: number) {
     return await this.paymentService.getPaymentsByUser(studentId);
   }
