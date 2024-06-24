@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Param,
   Post,
   Query,
   Res,
@@ -10,6 +11,7 @@ import {
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
@@ -23,6 +25,7 @@ import { ProcessPaymentParamsDTO } from './dtos/process-payment-params.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Response } from 'express';
 import configuration from '../config/configuration';
+import { PaymentDTO } from './dtos/payment.dto';
 
 @Controller('payment')
 @ApiTags('Payment')
@@ -72,5 +75,13 @@ export class PaymentController extends GenericController<
     } catch (e) {
       res.redirect(`${configuration().baseStatusPage}error`);
     }
+  }
+
+  @Get(':studentId')
+  @ApiBearerAuth()
+  @ApiParam({ name: 'studentId', type: 'number' })
+  @ApiResponse({ type: PaymentDTO, isArray: true, status: HttpStatus.OK })
+  async getPaymentsByUser(@Param('studentId') studentId: number) {
+    return await this.paymentService.getPaymentsByUser(studentId);
   }
 }
