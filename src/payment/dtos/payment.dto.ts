@@ -1,6 +1,6 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { Payment } from '../entities/payment.entity';
-import { ClassType } from 'src/student/class-schedules/class-schedules-types';
+import { ClassType } from '../../student/class-schedules/class-schedules-types';
 import { PaymentStatus } from '../types/payment-status.type';
 
 export class PaymentDTO extends PartialType(
