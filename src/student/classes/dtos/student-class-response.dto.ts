@@ -7,4 +7,9 @@ export class StudentClassResponseDTO implements Partial<StudentClassDTO> {
   classType: ClassType;
   paymentId: number;
   studentId: number;
+  schedule: string;
+  link: string;
+  startDate: Date;
+  classLevel: string;
+  hoursDuration: number;
 }
