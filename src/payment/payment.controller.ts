@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Param,
   Post,
   Query,
   Res,
@@ -10,6 +11,7 @@ import {
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
@@ -72,5 +74,12 @@ export class PaymentController extends GenericController<
     } catch (e) {
       res.redirect(`${configuration().baseStatusPage}error`);
     }
+  }
+
+  @Get(':studentId')
+  @ApiBearerAuth()
+  @ApiParam({ name: 'studentId', type: 'number' })
+  async getPaymentsByUser(@Param('studentId') studentId: number) {
+    return await this.paymentService.getPaymentsByUser(studentId);
   }
 }

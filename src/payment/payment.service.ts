@@ -124,4 +124,12 @@ export class PaymentService extends GenericService<Payment> {
       }
     }
   }
+
+  async getPaymentsByUser(studentId: number) {
+    const payments = await this.paymentRepository.find({
+      where: { user: { id: studentId } },
+    });
+
+    return payments;
+  }
 }
