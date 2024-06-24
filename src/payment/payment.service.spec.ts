@@ -9,6 +9,9 @@ import { DataSource } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { ClassesService } from '../student/classes/classes.service';
 import { StudentClass } from '../student/classes/entities/student-class.entity';
+import { ClassSchedulesService } from '../student/class-schedules/class-schedules.service';
+import { GoogleSpreadSheetService } from '../shared/google-spread-sheet/google-spread-sheet.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('PaymentService', () => {
   let service: PaymentService;
@@ -40,6 +43,13 @@ describe('PaymentService', () => {
           useValue: undefined,
         },
         ClassesService,
+        ClassSchedulesService,
+        GoogleSpreadSheetService,
+        ConfigService,
+        {
+          provide: 'CONFIG_OPTIONS',
+          useValue: undefined,
+        }
       ],
     }).compile();
 

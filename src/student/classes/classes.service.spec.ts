@@ -6,6 +6,9 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { StudentClass } from './entities/student-class.entity';
 import { User } from '../../user/entities/user.entity';
 import { Payment } from '../../payment/entities/payment.entity';
+import { ClassSchedulesService } from '../class-schedules/class-schedules.service';
+import { GoogleSpreadSheetService } from '../../shared/google-spread-sheet/google-spread-sheet.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('ClassesService', () => {
   let service: ClassesService;
@@ -30,6 +33,13 @@ describe('ClassesService', () => {
           useValue: mockRepository,
         },
         ClassesService,
+        ClassSchedulesService,
+        GoogleSpreadSheetService,
+        ConfigService,
+        {
+          provide: 'CONFIG_OPTIONS',
+          useValue: undefined,
+        }
       ],
     }).compile();
 
