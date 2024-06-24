@@ -8,6 +8,8 @@ import { User } from '../../user/entities/user.entity';
 import { Payment } from '../../payment/entities/payment.entity';
 import { Mapper } from '../../utils/mapper';
 import { StudentClassResponseDTO } from './dtos/student-class-response.dto';
+import { ClassSchedulesService } from '../class-schedules/class-schedules.service';
+import { classMapping } from '../class-schedules/class-schedules-types';
 
 @Injectable()
 export class ClassesService extends GenericService<StudentClass> {
@@ -18,6 +20,7 @@ export class ClassesService extends GenericService<StudentClass> {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Payment)
     private readonly paymentRepository: Repository<Payment>,
+    private readonly classSchedulesService: ClassSchedulesService,
   ) {
     super(classesServiceRepository);
   }
@@ -35,6 +38,32 @@ export class ClassesService extends GenericService<StudentClass> {
 
       let toClass: new () => StudentClassResponseDTO[];
       const resp = Mapper.mapFromTo(classes.classes, toClass);
+
+      const promises = resp.map((klass) => {
+        const targetClass = classMapping[klass.classType]; //We are getting the target sheet name of GoogleSpreadSheet file
+
+        return this.classSchedulesService.getClassScheduleById(
+          targetClass,
+          klass.classScheduleId,
+        );
+      });
+
+      //Promises execution
+      await (async () => {
+        try {
+          const results = await Promise.all(promises);
+
+          results.forEach((value, index) => {
+            resp[index].schedule = value.schedule;
+            resp[index].link = value.link;
+            resp[index].startDate = value.startDate;
+            resp[index].classLevel = value.classLevel;
+            resp[index].hoursDuration = value.hoursDuration;
+          });
+        } catch (error) {
+          throw error;
+        }
+      })();
 
       return resp;
     } catch (e) {

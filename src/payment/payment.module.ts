@@ -9,13 +9,16 @@ import { Payment } from './entities/payment.entity';
 import { User } from '../user/entities/user.entity';
 import { ClassesService } from '../student/classes/classes.service';
 import { StudentClass } from '../student/classes/entities/student-class.entity';
+import { ClassSchedulesService } from '../student/class-schedules/class-schedules.service';
+import { GoogleSpreadSheetModule } from '../shared/google-spread-sheet/google-spread-sheet.module';
 
 @Module({
   imports: [
     MercadoPagoModule.register(configuration().mercadoPagoConfig),
+    GoogleSpreadSheetModule.register(configuration().gspConfig),
     TypeOrmModule.forFeature([Payment, User, StudentClass]),
   ],
   controllers: [PaymentController],
-  providers: [PaymentService, UserService, ClassesService],
+  providers: [PaymentService, UserService, ClassesService, ClassSchedulesService],
 })
 export class PaymentModule {}
