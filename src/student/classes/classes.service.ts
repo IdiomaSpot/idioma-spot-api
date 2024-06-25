@@ -39,8 +39,6 @@ export class ClassesService extends GenericService<StudentClass> {
         classes: true,
       },
     });
-    console.log(studentId);
-    console.log(student);
 
     let toClass: new () => StudentClassResponseDTO[];
     const classes = Mapper.mapFromTo(student.classes, toClass);
