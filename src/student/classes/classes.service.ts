@@ -9,7 +9,12 @@ import { Payment } from '../../payment/entities/payment.entity';
 import { Mapper } from '../../utils/mapper';
 import { StudentClassResponseDTO } from './dtos/student-class-response.dto';
 import { ClassSchedulesService } from '../class-schedules/class-schedules.service';
-import { classMapping } from '../class-schedules/class-schedules-types';
+import {
+  ClassType,
+  classMapping,
+} from '../class-schedules/class-schedules-types';
+import { ValidateClassParamsDTO } from './dtos/validate-class-params.dto';
+import { StudentEnrolledDTO } from './dtos/student-enrolled-response.dto';
 
 @Injectable()
 export class ClassesService extends GenericService<StudentClass> {
@@ -25,19 +30,26 @@ export class ClassesService extends GenericService<StudentClass> {
     super(classesServiceRepository);
   }
 
+  private async getStudentClasses(
+    studentId: number,
+  ): Promise<StudentClassResponseDTO[]> {
+    const student = await this.userRepository.findOne({
+      where: { id: studentId },
+      relations: {
+        classes: true,
+      },
+    });
+
+    let toClass: new () => StudentClassResponseDTO[];
+    const classes = Mapper.mapFromTo(student.classes, toClass);
+    return classes;
+  }
+
   async getClassesByStudent(
     studentId: number,
   ): Promise<StudentClassResponseDTO[]> {
     try {
-      const classes = await this.userRepository.findOne({
-        where: { id: studentId },
-        relations: {
-          classes: true,
-        },
-      });
-
-      let toClass: new () => StudentClassResponseDTO[];
-      const resp = Mapper.mapFromTo(classes.classes, toClass);
+      const resp = await this.getStudentClasses(studentId);
 
       const promises = resp.map((klass) => {
         const targetClass = classMapping[klass.classType]; //We are getting the target sheet name of GoogleSpreadSheet file
@@ -88,5 +100,19 @@ export class ClassesService extends GenericService<StudentClass> {
     } catch {
       throw new Error('ERROR CREATING STUDENT CLASS');
     }
+  }
+
+  async isStudentAlreadyEnrolled(
+    params: ValidateClassParamsDTO,
+  ): Promise<StudentEnrolledDTO> {
+    const classes = await this.getStudentClasses(params.studentId);
+
+    const index = classes.findIndex(
+      (cls) =>
+        cls.classType == params.classType &&
+        cls.classScheduleId == params.classScheduleId,
+    );
+
+    return { isAlredyEnrolled: index === -1 ? false : true };
   }
 }
