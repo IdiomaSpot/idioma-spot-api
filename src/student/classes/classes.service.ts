@@ -92,7 +92,8 @@ export class ClassesService extends GenericService<StudentClass> {
         id: studentClassDTO.paymentId,
       });
       let entity = new StudentClass();
-      entity = Mapper.mapFromTo(studentClassDTO, StudentClass);
+      entity.classScheduleId = studentClassDTO.classScheduleId;
+      entity.classType = studentClassDTO.classType;
       entity.payment = payment;
       entity.student = user;
 

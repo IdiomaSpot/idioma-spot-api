@@ -105,7 +105,7 @@ export class PaymentService extends GenericService<Payment> {
         studentClass.paymentId = payment.id;
         studentClass.studentId = payment.user.id;
         try {
-          await this.classesService.create(studentClass);
+          const created = await this.classesService.create(studentClass);
         } catch {
           throw new Error('EXPECTATION_FAILED');
         }
