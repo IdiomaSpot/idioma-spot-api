@@ -7,6 +7,9 @@ export class Offer extends GenericEntity {
   id: number;
 
   @Column()
+  title: string;
+
+  @Column()
   description: string;
 
   @Column({ default: false })

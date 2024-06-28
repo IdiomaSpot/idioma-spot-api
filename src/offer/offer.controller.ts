@@ -48,6 +48,7 @@ export class OfferController extends GenericController<Offer, OfferService> {
     const offer = await this.offerService.createOffer(image, body);
 
     let response = new OfferResponseDTO();
+    response.title = offer.title;
     response.description = offer.description;
     response.enableSignUpButton = offer.enableSignUpButton;
     response.image = 'successfuly saved';
@@ -67,6 +68,7 @@ export class OfferController extends GenericController<Offer, OfferService> {
 
     let item = new OfferResponseDTO();
     item.id = currentOffer.id;
+    item.title = currentOffer.title;
     item.description = currentOffer.description;
     item.enableSignUpButton = currentOffer.enableSignUpButton;
     item.mimetype = currentOffer.mimetype;

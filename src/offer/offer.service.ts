@@ -41,6 +41,7 @@ export class OfferService extends GenericService<Offer> {
     const newOffer = new Offer();
     newOffer.image = optimizedImage;
     newOffer.mimetype = 'image/jpeg';
+    newOffer.title = offerRequest.title;
     newOffer.description = offerRequest.description;
     newOffer.enableSignUpButton = offerRequest.enableSignUpButton;
 
