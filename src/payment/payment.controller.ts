@@ -7,6 +7,7 @@ import {
   Post,
   Query,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -26,6 +27,10 @@ import { Public } from '../auth/decorators/public.decorator';
 import { Response } from 'express';
 import configuration from '../config/configuration';
 import { PaymentDTO } from './dtos/payment.dto';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { UserRole } from '../user/user-role.enum';
+import { FindManyOptions, MoreThanOrEqual } from 'typeorm';
 
 @Controller('payment')
 @ApiTags('Payment')
@@ -83,5 +88,20 @@ export class PaymentController extends GenericController<
   @ApiResponse({ type: PaymentDTO, isArray: true, status: HttpStatus.OK })
   async getPaymentsByUser(@Param('studentId') studentId: number) {
     return await this.paymentService.getPaymentsByUser(studentId);
+  }
+
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @Get()
+  @ApiBearerAuth()
+  async find<ReturnType = Payment>(
+    @Query() options?: FindManyOptions<Payment>,
+  ): Promise<ReturnType[]> {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setHours(0, 0, 0, 0);
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    options = { where: { createdAt: MoreThanOrEqual(thirtyDaysAgo) } };
+
+    return super.find<ReturnType>({ ...options });
   }
 }

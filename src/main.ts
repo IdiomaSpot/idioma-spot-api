@@ -16,6 +16,7 @@ async function bootstrap() {
     .addTag('Class Schedules')
     .addTag('IS Points')
     .addTag('Payment')
+    .addTag('Offers')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
