@@ -10,6 +10,7 @@ import { JwtAuthGuard } from './auth/jwt/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { StudentModule } from './student/student.module';
 import { PaymentModule } from './payment/payment.module';
+import { OfferModule } from './offer/offer.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PaymentModule } from './payment/payment.module';
     UserModule,
     StudentModule,
     PaymentModule,
+    OfferModule,
   ],
   controllers: [AppController],
   providers: [AppService,
