@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OfferService } from './offer.service';
+import { PromoService } from './promo.service';
 import { DataSource } from 'typeorm';
 import { mockDataSource, mockRepository } from '../utils/mocks/datasource.mock';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Offer } from './entities/offer.entity';
+import { Promo } from './entities/promo.entity';
 
-describe('OfferService', () => {
-  let service: OfferService;
+describe('PromoService', () => {
+  let service: PromoService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -16,14 +16,14 @@ describe('OfferService', () => {
           useValue: mockDataSource,
         },
         {
-          provide: getRepositoryToken(Offer),
+          provide: getRepositoryToken(Promo),
           useValue: mockRepository,
         },
-        OfferService,
+        PromoService,
       ],
     }).compile();
 
-    service = module.get<OfferService>(OfferService);
+    service = module.get<PromoService>(PromoService);
   });
 
   it('should be defined', () => {

@@ -1,28 +1,28 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { GenericService } from '../generics/generic.service';
-import { Offer } from './entities/offer.entity';
+import { Promo } from './entities/promo.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { OfferRequestDTO } from './dtos/offer-create.dto';
+import { PromoRequestDTO } from './dtos/promo-create.dto';
 import * as sharp from 'sharp';
 
 @Injectable()
-export class OfferService extends GenericService<Offer> {
+export class PromoService extends GenericService<Promo> {
   private readonly MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   private readonly MAX_WIDTH = 800;
   private readonly MAX_HEIGHT = 800;
 
   constructor(
-    @InjectRepository(Offer)
-    private readonly offerRepository: Repository<Offer>,
+    @InjectRepository(Promo)
+    private readonly promoRepository: Repository<Promo>,
   ) {
-    super(offerRepository);
+    super(promoRepository);
   }
 
-  async createOffer(
+  async createPromo(
     file: Express.Multer.File,
-    offerRequest: OfferRequestDTO,
-  ): Promise<Offer> {
+    promoRequest: PromoRequestDTO,
+  ): Promise<Promo> {
     if (!file.mimetype.startsWith('image/')) {
       throw new BadRequestException('Invalid file type');
     }
@@ -38,13 +38,13 @@ export class OfferService extends GenericService<Offer> {
       .toFormat('jpeg', { quality: 80 }) // Convert to JPEG with quality 80
       .toBuffer();
 
-    const newOffer = new Offer();
-    newOffer.image = optimizedImage;
-    newOffer.mimetype = 'image/jpeg';
-    newOffer.title = offerRequest.title;
-    newOffer.description = offerRequest.description;
-    newOffer.enableSignUpButton = offerRequest.enableSignUpButton;
+    const newPromo = new Promo();
+    newPromo.image = optimizedImage;
+    newPromo.mimetype = 'image/jpeg';
+    newPromo.title = promoRequest.title;
+    newPromo.description = promoRequest.description;
+    newPromo.enableSignUpButton = promoRequest.enableSignUpButton;
 
-    return await super.create(newOffer);
+    return await super.create(newPromo);
   }
 }
