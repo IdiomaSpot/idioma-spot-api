@@ -1,8 +1,8 @@
 import { GenericEntity } from '../../generics/generic.entity';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('offer')
-export class Offer extends GenericEntity {
+@Entity('promo')
+export class Promo extends GenericEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

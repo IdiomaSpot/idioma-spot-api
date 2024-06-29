@@ -10,7 +10,7 @@ import { JwtAuthGuard } from './auth/jwt/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { StudentModule } from './student/student.module';
 import { PaymentModule } from './payment/payment.module';
-import { OfferModule } from './offer/offer.module';
+import { PromoModule } from './promo/promo.module';
 
 @Module({
   imports: [
@@ -23,13 +23,13 @@ import { OfferModule } from './offer/offer.module';
       ...configuration().ormConfig,
       autoLoadEntities: true,
       extra: {
-        connectionLimit: 10, // Use a connection pool with a maximum of 10 connections
+        connectionLimit: 15, // Use a connection pool with a maximum of 15 connections
       },
     }),
     UserModule,
     StudentModule,
     PaymentModule,
-    OfferModule,
+    PromoModule,
   ],
   controllers: [AppController],
   providers: [AppService,

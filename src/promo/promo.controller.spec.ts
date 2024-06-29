@@ -1,34 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OfferController } from './offer.controller';
+import { PromoController } from './promo.controller';
 import { DataSource } from 'typeorm';
 import {
   mockDataSource,
   mockRepository,
 } from '../utils/mocks/datasource.mock';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Offer } from './entities/offer.entity';
-import { OfferService } from './offer.service';
+import { Promo } from './entities/promo.entity';
+import { PromoService } from './promo.service';
 
-describe('OfferController', () => {
-  let controller: OfferController;
+describe('PromoController', () => {
+  let controller: PromoController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [OfferController],
+      controllers: [PromoController],
       providers: [
         {
           provide: DataSource,
           useValue: mockDataSource,
         },
         {
-          provide: getRepositoryToken(Offer),
+          provide: getRepositoryToken(Promo),
           useValue: mockRepository,
         },
-        OfferService,
+        PromoService,
       ],
     }).compile();
 
-    controller = module.get<OfferController>(OfferController);
+    controller = module.get<PromoController>(PromoController);
   });
 
   it('should be defined', () => {

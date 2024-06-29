@@ -1,7 +1,7 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { Offer } from '../entities/offer.entity';
+import { Promo } from '../entities/promo.entity';
 
-export class OfferResponseDTO extends PartialType(Offer) {
+export class PromoResponseDTO extends PartialType(Promo) {
   @ApiProperty()
   title: string;
   
