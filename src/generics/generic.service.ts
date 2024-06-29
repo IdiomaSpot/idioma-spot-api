@@ -27,7 +27,7 @@ export abstract class GenericService<
         entity as QueryDeepPartialEntity<Entity>,
       );
 
-      response = await this.findOneById<RespType>(result.raw.id);
+      response = await this.findOneById<RespType>(result.raw.insertId);
       return Promise.resolve(response);
     } catch (error) {
       throw error;

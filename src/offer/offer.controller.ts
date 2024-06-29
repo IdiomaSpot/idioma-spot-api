@@ -45,6 +45,12 @@ export class OfferController extends GenericController<Offer, OfferService> {
     @UploadedFile() image: Express.Multer.File,
     @Body() body: OfferRequestDTO,
   ): Promise<OfferResponseDTO> {
+    const boolValue =
+      typeof body.enableSignUpButton === 'string'
+        ? body.enableSignUpButton === 'true'
+        : body.enableSignUpButton;
+    body.enableSignUpButton = boolValue;
+
     const offer = await this.offerService.createOffer(image, body);
 
     let response = new OfferResponseDTO();
