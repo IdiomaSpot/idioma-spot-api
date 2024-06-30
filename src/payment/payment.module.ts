@@ -19,6 +19,11 @@ import { GoogleSpreadSheetModule } from '../shared/google-spread-sheet/google-sp
     TypeOrmModule.forFeature([Payment, User, StudentClass]),
   ],
   controllers: [PaymentController],
-  providers: [PaymentService, UserService, ClassesService, ClassSchedulesService],
+  providers: [
+    PaymentService,
+    UserService,
+    ClassesService,
+    ClassSchedulesService,
+  ],
 })
 export class PaymentModule {}

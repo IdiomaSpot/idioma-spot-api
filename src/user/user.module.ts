@@ -8,7 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from '../auth/auth.service';
 import { LocalStrategy } from '../auth/local/local.strategy';
 import { JwtStrategy } from '../auth/jwt/jwt.strategy';
-import configuration from 'src/config/configuration';
+import configuration from '../config/configuration';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -16,9 +16,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       load: [configuration],
     }),
-    TypeOrmModule.forFeature([
-      User
-    ]),
+    TypeOrmModule.forFeature([User]),
     PassportModule,
     JwtModule.register({
       secret: configuration().jwtSecret,
@@ -27,14 +25,7 @@ import { ConfigModule } from '@nestjs/config';
       },
     }),
   ],
-  controllers: [
-    UserController
-  ],
-  providers: [
-    UserService,
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-  ]
+  controllers: [UserController],
+  providers: [UserService, AuthService, LocalStrategy, JwtStrategy],
 })
-export class UserModule { }
+export class UserModule {}

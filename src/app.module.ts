@@ -32,7 +32,8 @@ import { PromoModule } from './promo/promo.module';
     PromoModule,
   ],
   controllers: [AppController],
-  providers: [AppService,
+  providers: [
+    AppService,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard
@@ -40,7 +41,7 @@ import { PromoModule } from './promo/promo.module';
     {
       provide: APP_GUARD,
       useClass: RolesGuard
-    }
+    },
   ],
 })
 
