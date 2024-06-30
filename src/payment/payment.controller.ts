@@ -30,7 +30,14 @@ import { PaymentDTO } from './dtos/payment.dto';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../user/user-role.enum';
-import { FindManyOptions, MoreThanOrEqual } from 'typeorm';
+import {
+  And,
+  Equal,
+  FindManyOptions,
+  IsNull,
+  MoreThanOrEqual,
+  Not,
+} from 'typeorm';
 
 @Controller('payment')
 @ApiTags('Payment')
@@ -100,7 +107,15 @@ export class PaymentController extends GenericController<
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setHours(0, 0, 0, 0);
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    options = { where: { createdAt: MoreThanOrEqual(thirtyDaysAgo) } };
+    options = {
+      where: {
+        createdAt: MoreThanOrEqual(thirtyDaysAgo),
+        description: And(Not(IsNull()), Not(Equal(''))),
+        title: And(Not(IsNull()), Not(Equal(''))),
+        classScheduleId: And(Not(IsNull()), Not(Equal(''))),
+      },
+      relations: { user: true },
+    };
 
     return super.find<ReturnType>({ ...options });
   }
