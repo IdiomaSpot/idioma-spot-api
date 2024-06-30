@@ -21,7 +21,7 @@ import {
 import { PromoRequestDTO } from './dtos/promo-create.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { PromoResponseDTO } from './dtos/promo-response.dto';
-import { FindManyOptions } from 'typeorm';
+import { FindManyOptions, IsNull, Not } from 'typeorm';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { UserRole } from '../user/user-role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -69,8 +69,13 @@ export class PromoController extends GenericController<Promo, PromoService> {
   ): Promise<ReturnType[]> {
     const currentPromo = await this.promoService.findOne<Promo>({
       order: { id: 'DESC' },
-      where: { deletedAt: null },
+      where: { id: Not(IsNull()) },
+      withDeleted: true,
     });
+
+    if (currentPromo.deletedAt != null) {
+      return [];
+    }
 
     let item = new PromoResponseDTO();
     item.id = currentPromo.id;
